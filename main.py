@@ -7,17 +7,14 @@ from aiogram.fsm.storage.redis import RedisStorage, Redis
 from aiogram.types import (CallbackQuery, InlineKeyboardButton,
                            InlineKeyboardMarkup, Message, PhotoSize)
 
+
 config: Config = load_config()
+BOT_TOKEN: str = config.tg_bot.token
 
-# Инициализируем Redis
-redis = Redis(host='localhost')
-
-# Инициализируем хранилище (создаем экземпляр класса MemoryStorage)
-storage = RedisStorage(redis=redis)
 
 # Создаем объекты бота и диспетчера
-bot = Bot(token=config.tg_bot.token)
-dp = Dispatcher(storage=storage)
+bot = Bot(BOT_TOKEN)
+dp = Dispatcher()
 
 # Создаем "базу данных" пользователей
 user_dict: dict[int, dict[str, str | int | bool]] = {}
